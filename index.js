@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const CPF = require("cpf");
+const { usuarios } = require("./usuarios");
 
 // Define uma aplicação backend em Express
 // Recursos pré-configurados
@@ -97,6 +98,9 @@ app.get("/boasvindas", (req,res) =>{
     }
 })
 
+app.get("/usuarios", (req,res) =>{
+    res.json(usuarios);
+})
 
 // Inicializa a escuta de requisições do servidor
 app.listen(3000, () => {
