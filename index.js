@@ -64,6 +64,39 @@ app.get("/cpfs/:numero", (req, res) => {
   }
   res.end();
 });
+app.get("/nome/", (req, res) => {
+    const {nome} = req.query;
+    if(nome){
+        res.send(`Olá, ${nome}`);
+    }else{
+        res.status(400).send("Envie o nome corretamente")
+    }
+})
+
+app.get("/soma/", (req,res) => {
+    let {num1, num2} = req.query;
+
+    if(num1 && num2){
+        const soma = Number(num1) + Number(num2);
+        res.send(`Soma : ${soma}`)
+    }else{
+        res.status(400).send("Forneça números válidos");
+    }
+})
+
+app.get("/boasvindas", (req,res) =>{
+    const {lang} = req.query;
+
+    if(lang === "pt"){
+        res.send("Bem vindo")
+        
+    }else if(lang === "en"){
+        res.send("Welcome!")
+    }else{
+        res.status(400).send("Linguagem não suportada")
+    }
+})
+
 
 // Inicializa a escuta de requisições do servidor
 app.listen(3000, () => {
