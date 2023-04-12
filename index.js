@@ -98,9 +98,47 @@ app.get("/boasvindas", (req,res) =>{
     }
 })
 
-app.get("/usuarios", (req,res) =>{
-    res.json(usuarios);
+
+app.get("/usuarios", (req, res) => {
+  res.json(usuarios);
+});
+//Usando query
+//Query não é obrigatório  escrever os dados.
+app.get("/usuarios/novo", (req,res) =>{
+  const {nome, email} = req.query;
+
+  const novoUsuario = {nome: nome, email: email};
+  usuarios.push(novoUsuario);
+  res.status(201).json({message: "Usuario adicionado"});
 })
+//Usando params
+app.get("/usuarios/email/:email", (req,res) =>{
+  const {email} = req.params;
+  const usuarioEncontrado = usuarios.find(el => email === el.email);
+  if(usuarioEncontrado){
+    res.json(usuarioEncontrado)
+  }else{
+    res.status(404).send({message : "Usuario não encontrado"});
+  }
+})
+
+app.get("/usuarios/:index", (req, res) => {
+  const index = Number(req.params.index);
+  const usuarioEncontrado = usuarios[index];
+
+  // Tratar a ausência do usuário
+  if (usuarioEncontrado) {
+    res.json(usuarioEncontrado);
+  } else {
+    // Not Found = 404
+    res.status(404).json({ message: "Usuário não encontrado" });
+  }
+})
+
+
+
+
+
 
 // Inicializa a escuta de requisições do servidor
 app.listen(3000, () => {
